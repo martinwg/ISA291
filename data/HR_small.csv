@@ -1,0 +1,5 @@
+ID_Number,Sex,Age,Age_Group,Educational_Level,Annual_Income
+120,F,24,2,Bachelor's,"$32,000 "
+137,M,45,4,Diploma,"$55,000 "
+213,M,31,3,Master's,"$47,000 "
+254,F,52,5,Doctorate,"$122,000 "
