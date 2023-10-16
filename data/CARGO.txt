@@ -1,0 +1,16 @@
+COST	CARGO	
+17.2	Fragile	
+11.1	Fragile	
+12.0	Fragile	
+10.9	Fragile	
+13.8	Fragile	
+6.5	SemiFrag
+10.0	SemiFrag
+11.5	SemiFrag	
+7.0	SemiFrag	
+8.5	SemiFrag	
+2.1	Durable	
+1.3	Durable	
+3.4	Durable	
+7.5	Durable	
+2.0	Durable	
