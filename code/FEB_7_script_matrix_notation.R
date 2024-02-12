@@ -70,5 +70,44 @@ solve(A)
 ## INVERSE OF MATRIX B
 solve(B)
 
+## CREATE EXAMPLE USING MATRIX ALGEBRA
+## WITH REGRESSION ANALYSIS
+
+## DESIGN MATRIX
+## MODEL MATRIX
+## X
+X = matrix(c(1,1,1,1,1,3,12,6,20,14, 6, 24, 12, 40, 28.0005 ), ncol = 3)
+## y vector
+y = c(50,45,55,15,15)
+
+## ESTIMATES
+## betahat = (X'X)^-1 (X'y)
+
+solve(t(X) %*% X)  %*%  (t(X)%*%y)
+
+## R Implementation
+df = data.frame(x = c(3,12,6,20,14), y = c(50,45,55,15,15))
+df
+
+## lm
+reg1 = lm(y ~ x, data = df)
+summary(reg1)
+
+## DESIGN MATRIX or MODEL MATRIX
+model.matrix(reg1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
