@@ -51,6 +51,138 @@ lines(temps, pred_temps2, col = "blue", lwd = 4)
 ## MODEL 3
 lines(temps, pred_temps3, col = "green", lwd = 4)
 
+## New data set
+df = df[, c("High.Temp.F", "Low_Temp_F", "Total")]
+
+## BUILDING A PREDICTIVE MODEL
+## STEPS TO TAKE
+## After the data is clean (no missing values, incorrectly coded vars)
+## 1) Split the data into training/test
+set.seed(291) ## set a seed for replicability
+trainIndex = sample(1:nrow(df), size = round(0.7*nrow(df)))
+df_train = df[trainIndex, ]
+df_test = df[-trainIndex, ]
+
+
+## MODEL 1
+reg1 = lm(Total ~ High.Temp.F + Low_Temp_F, data = df_train)
+summary(reg1)
+
+## MODEL 2
+reg2 = lm(Total ~ High.Temp.F + Low_Temp_F + I(High.Temp.F^2) + I(Low_Temp_F^2)
+          + High.Temp.F:Low_Temp_F, data = df_train)
+summary(reg2)
+
+## MODEL 3
+reg3 = lm(Total ~ High.Temp.F + Low_Temp_F + I(High.Temp.F^2), data = df_train)
+summary(reg3)
+
+## y and yhats
+y = df_test$Total
+yhat1 = predict(reg1, df_test) 
+yhat2 = predict(reg2, df_test) 
+yhat3 = predict(reg3, df_test) 
+
+## MSE
+MSE_MODEL1 = mean((y - yhat1)^2)
+MSE_MODEL1
+MSE_MODEL2 = mean((y - yhat2)^2)
+MSE_MODEL2
+MSE_MODEL3 = mean((y - yhat3)^2)
+MSE_MODEL3
+
+## RMSE
+RMSE_MODEL1 = sqrt(mean((y - yhat1)^2))
+RMSE_MODEL1
+RMSE_MODEL2 = sqrt(mean((y - yhat2)^2))
+RMSE_MODEL2
+RMSE_MODEL3 = sqrt(mean((y - yhat3)^2))
+RMSE_MODEL3
+
+## MAE
+MAE_MODEL1 = mean(abs(y - yhat1))
+MAE_MODEL1
+MAE_MODEL2 = mean(abs(y - yhat2))
+MAE_MODEL2
+MAE_MODEL3 = mean(abs(y - yhat3))
+MAE_MODEL3
+
+## R2
+SST = sum((y - mean(y))^2)
+SSE1 = sum((y - yhat1)^2)
+SSE2 = sum((y - yhat2)^2)
+SSE3 = sum((y - yhat3)^2)
+
+R2_MODEL1 = 1 - (SSE1/SST)
+R2_MODEL1
+R2_MODEL2 = 1 - (SSE2/SST)
+R2_MODEL2
+R2_MODEL3 = 1 - (SSE3/SST)
+R2_MODEL3
+
+## Complexity
+k1 = 2
+k2 = 5
+k3 = 3
+estimated_params1 = k1 + 1
+estimated_params2 = k2 + 1
+estimated_params3 = k3 + 1
+
+## AIC
+n = nrow(df_test)
+AIC_MODEL1 = n*log(SSE1/n) + 2*estimated_params1
+AIC_MODEL1
+AIC_MODEL2 = n*log(SSE2/n) + 2*estimated_params2
+AIC_MODEL2
+AIC_MODEL3 = n*log(SSE3/n) + 2*estimated_params3
+AIC_MODEL3
+
+## BIC
+BIC_MODEL1 = n*log(SSE1/n) + log(n)*estimated_params1
+BIC_MODEL1
+BIC_MODEL2 = n*log(SSE1/n) + log(n)*estimated_params2
+BIC_MODEL2
+BIC_MODEL3 = n*log(SSE1/n) + log(n)*estimated_params3
+BIC_MODEL3
+
+## Using an automated package
+library(caret)
+
+postResample(yhat1, y)
+postResample(pred = yhat2, obs = y)
+postResample(pred = yhat3, obs = y)
+
+## 3D visualization
+library(car)
+library(rgl)
+scatter3d(Total ~ High.Temp.F + Low_Temp_F, data = df_train, fit = "quadratic")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## EXAMPLE ON PREDICTIVE MODELING
 df = read.csv('https://raw.githubusercontent.com/martinwg/ISA291/main/data/umbrellas.csv')
@@ -99,11 +231,11 @@ SSE = sum((ytrue - yhat)^2)
 SST = sum((ytrue - mean(ytrue))^2)
 R2_MODEL1 = 1 - (SSE/SST)
 R2_MODEL1
-## COMPLEXITY IS k
-COMPLEXITY_MODEL1 = 1
-## AIC = n*log(SSE/n)+2k
+## number of
+## estimated parameters IS k+1
+k = 1
+## AIC = n*log(SSE/n)+2(k+1)
 n = nrow(df_test)
-k = COMPLEXITY_MODEL1
 SSE = sum((ytrue - yhat)^2)
 AIC_MODEL1 = n*log(SSE/n) + 2*k
 AIC_MODEL1
