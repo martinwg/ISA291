@@ -159,31 +159,6 @@ scatter3d(Total ~ High.Temp.F + Low_Temp_F, data = df_train, fit = "quadratic")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## EXAMPLE ON PREDICTIVE MODELING
 df = read.csv('https://raw.githubusercontent.com/martinwg/ISA291/main/data/umbrellas.csv')
 df
